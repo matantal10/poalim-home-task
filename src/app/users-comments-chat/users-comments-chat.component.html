@@ -1,12 +1,34 @@
 <div class="chat-container">
-  <div class="chat-card">
-    <div class="user-image">
-      <img class="rounded" src="./../../assets/images/1.jpg">
+  <div *ngFor="let entity of displayedData">
+    <div class="chat-card" *ngIf="entity.parentCommentId === null">
+      <div class="user-image">
+        <img class="rounded" src="./../../assets/images/{{entity.user?.id}}.jpg">
+      </div>
+      <div class="comment-details">
+        <div class="user-name">{{entity.user?.displayName}}</div>
+        <div class="comment-date">{{entity.createdAt}}</div>
+      </div>
+      <div class="comment">{{entity.txt}}</div>
+      <div class="btns-container">
+<!--        <button (click)="editComment()">EDIT COMMENT</button>-->
+<!--        <button (click)="deleteComment(entity)">DELETE COMMENT</button>-->
+      </div>
     </div>
-    <div class="comment-details">
-      <div class="user-name">Bart Simpson</div>
-      <div class="comment-date">7 hours ago</div>
+
+    <div *ngIf="entity.comments?.length > 0">
+      <div class="chat-card child" *ngFor="let child of entity.comments">
+        <div class="user-image">
+          <img class="rounded" src="./../../assets/images/{{child.user?.id}}.jpg">
+        </div>
+        <div class="comment-details">
+          <div class="user-name">{{child.user?.displayName}}</div>
+          <div class="comment-date">{{child.createdAt}}</div>
+        </div>
+        <div class="comment">{{child.txt}}</div>
+      </div>
     </div>
-    <div class="comment">dsdadasdasdasdasdasdasdasdasdasdasdasdasdasdasdsadsa</div>
+
   </div>
 </div>
+
+

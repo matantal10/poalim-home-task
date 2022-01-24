@@ -10,7 +10,6 @@ import {forkJoin} from "rxjs";
 })
 export class UsersCommentsContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 
-   CommentDisplayList:CommentIfc[] = [];
    usersList:UserIfc[] = [];
    commentsList:CommentIfc[] = [];
 

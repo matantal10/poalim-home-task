@@ -8,8 +8,9 @@
   .chat-card {
     display: flex;
     background-color: white;
-    margin: 5px;
+    margin: 15px;
     padding: 10px;
+    border-radius: 5px;
 
     .user-image {
       height: 45px;
@@ -46,6 +47,14 @@
     .comment {
       display: flex;
       align-items: center;
+    }
+
+    .btns-container {
+      display: flex;
+    }
+
+    &.child {
+      margin-left: 40px;
     }
   }
 

@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {CommentIfc} from "../interfaces/UserIfc";
 
 @Component({
   selector: 'app-users-comments-chat',
@@ -7,11 +8,20 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class UsersCommentsChatComponent implements OnInit {
 
-  @Input() displayedData;
+  @Input() displayedData: CommentIfc[];
+
+  isEditMode: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  editComment() {
+
+  }
+
+  deleteComment(entity: CommentIfc) {
+
+  }
 }
