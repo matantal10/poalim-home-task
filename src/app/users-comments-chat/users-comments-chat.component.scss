@@ -4,6 +4,9 @@
   padding: 10px;
   width: 50%;
   background-color: lightgrey;
+  max-height: 700px;
+  overflow: auto;
+  overflow-x: hidden;
 
   .chat-card {
     display: flex;
@@ -14,13 +17,15 @@
 
     .user-image {
       height: 45px;
-
+      width: 45px;
       display: flex;
       border: 1px solid black;
       border-radius: 50%;
 
       img.rounded {
         border-radius: 50%;
+        width: 45px;
+        height: 45px;
       }
     }
 
@@ -51,10 +56,24 @@
 
     .btns-container {
       display: flex;
+      margin: 0 30px;
+      align-items: center;
+
+      .btn {
+        margin: 5px;
+      }
     }
 
     &.child {
       margin-left: 40px;
+
+      &.selected {
+        background-color: darkgrey;
+      }
+    }
+
+    &.selected {
+      background-color: darkgrey;
     }
   }
 

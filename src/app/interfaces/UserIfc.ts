@@ -11,6 +11,6 @@ export interface CommentIfc {
   ownerId: number
   parentCommentId?: number
   txt: string
-  user?: UserIfc
+  user: UserIfc
   comments?: CommentIfc[]
 }

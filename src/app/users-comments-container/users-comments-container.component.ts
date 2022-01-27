@@ -10,15 +10,23 @@ import {forkJoin} from "rxjs";
 })
 export class UsersCommentsContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 
+
+
    usersList:UserIfc[] = [];
    commentsList:CommentIfc[] = [];
+   registeredUser: UserIfc;
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService) {
+    this.commentsList.forEach( comment => {
+      comment.comments = [];
+    })
+  }
 
   ngAfterViewInit(): void {
     }
 
   ngOnInit(): void {
+    this.registeredUser = {displayName: 'Bart Simpson', id: 3};
 
     forkJoin({
       resOne: this.http.getUsers(),
@@ -31,10 +39,12 @@ export class UsersCommentsContainerComponent implements OnInit, AfterViewInit, O
           this.associateCommentsToUsers(user);
         });
 
-      this.commentsList.forEach( comment => {
-        this.addCommentsToParentComment(comment);
-      });
-      console.log(this.commentsList)
+        this.commentsList.forEach( comment => {
+          this.addCommentsToParentComment(comment);
+        });
+
+        console.log(this.commentsList);
+
       });
 
   }
@@ -58,12 +68,15 @@ export class UsersCommentsContainerComponent implements OnInit, AfterViewInit, O
     if(this.commentsList.length > 0) {
       this.commentsList.forEach((comment: CommentIfc) => {
         if (comment.id === value.parentCommentId) {
-            comment.comments = [];
-            comment.comments.push(value);
+          if(!comment.comments) {
+            comment.comments = []
+          }
+          comment.comments = [...comment.comments, value];
         }
       });
     }
   }
+
 
 
 
