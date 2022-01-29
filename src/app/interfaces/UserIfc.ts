@@ -12,5 +12,6 @@ export interface CommentIfc {
   parentCommentId?: number
   txt: string
   user: UserIfc
-  comments?: CommentIfc[]
+  comments?: CommentIfc[],
+  isEditing?: boolean
 }

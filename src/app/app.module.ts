@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { UsersCommentsContainerComponent } from './users-comments-container/users-comments-container.component';
 import { CommentTimePipe } from './pipes/comment-time.pipe';
 import { UsersCommentsChatComponent } from './users-comments-chat/users-comments-chat.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { UsersCommentsChatComponent } from './users-comments-chat/users-comments
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

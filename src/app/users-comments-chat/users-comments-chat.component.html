@@ -1,5 +1,5 @@
 <div class="chat-container">
-  <pre>{{displayedData | json}}</pre>
+<!--  <pre>{{displayedData | json}}</pre>-->
   <div *ngFor="let entity of displayedData">
     <div class="chat-card" *ngIf="entity.parentCommentId === null" (click)="selectComment(entity)" [ngClass]="selectedComment === entity ? 'selected' : ''">
       <div class="user-image">
@@ -9,7 +9,8 @@
         <div class="user-name">{{entity.user?.displayName}}</div>
         <div class="comment-date">{{entity.createdAt | date}}</div>
       </div>
-      <div class="comment">{{entity.txt}}</div>
+      <div *ngIf="!entity?.isEditing" class="comment">{{entity.txt}}</div>
+      <div *ngIf="entity?.isEditing" class="comment"><input type="text" [(ngModel)]="entity.txt"></div>
       <div *ngIf="registeredUser.id === entity.user?.id" class="btns-container">
         <button (click)="editComment(entity)">EDIT COMMENT</button>
         <button (click)="deleteComment(entity)">DELETE COMMENT</button>
@@ -25,7 +26,8 @@
           <div class="user-name">{{child.user?.displayName}}</div>
           <div class="comment-date">{{child.createdAt | date}}</div>
         </div>
-        <div class="comment">{{child.txt}}</div>
+        <div *ngIf="!child?.isEditing" class="comment">{{child.txt}}</div>
+        <div *ngIf="child?.isEditing" class="comment"><input type="text" [(ngModel)]="child.txt"></div>
         <div *ngIf="registeredUser.id === child.user.id" class="btns-container">
           <button class="btn" (click)="editComment(child)">Edit Comment</button>
           <button class="btn" (click)="deleteComment(child)">Delete Comment</button>
