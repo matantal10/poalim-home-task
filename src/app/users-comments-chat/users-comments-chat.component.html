@@ -29,12 +29,24 @@
         <div *ngIf="!child?.isEditing" class="comment">{{child.txt}}</div>
         <div *ngIf="child?.isEditing" class="comment"><input type="text" [(ngModel)]="child.txt"></div>
         <div *ngIf="registeredUser.id === child.user.id" class="btns-container">
-          <button class="btn" (click)="editComment(child)">Edit Comment</button>
-          <button class="btn" (click)="deleteComment(child)">Delete Comment</button>
+          <button class="btn" (click)="editComment(child)">EDIT COMMENT</button>
+          <button class="btn" (click)="deleteComment(child)">DELETE COMMENT</button>
         </div>
       </div>
     </div>
 
+  </div>
+</div>
+
+<div class="chat-container">
+  <div class="chat-card new">
+    <div class="user-image">
+      <img class="rounded" src="./../../assets/images/{{registeredUser.id}}.jpg">
+    </div>
+    <div class="comment new"><textarea placeholder="Please add your comment here" [(ngModel)]="newComment"></textarea></div>
+    <div class="btns-container">
+      <button class="btn" (click)="submit()">SUBMIT</button>
+    </div>
   </div>
 </div>
 

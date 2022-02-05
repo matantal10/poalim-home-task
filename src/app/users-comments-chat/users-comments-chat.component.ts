@@ -12,6 +12,8 @@ export class UsersCommentsChatComponent implements OnInit {
   @Input() displayedData: CommentIfc[];
   @Input() registeredUser: UserIfc;
   selectedComment: CommentIfc;
+  newComment = '';
+  maxId: number;
 
 
   constructor(private cdr: ChangeDetectorRef) { }
@@ -31,7 +33,6 @@ export class UsersCommentsChatComponent implements OnInit {
     const index = this.displayedData.findIndex(comment => comment.id === entity.id);
 
     this.displayedData.splice(index, 1);
-    this.cdr.detectChanges();
   }
 
   selectComment(comment: CommentIfc) {
@@ -41,4 +42,18 @@ export class UsersCommentsChatComponent implements OnInit {
 
   }
 
+  submit() {
+
+    let comment: CommentIfc = {
+      createdAt: Date().toString(),
+      parentCommentId: null,
+      id: 80,
+      ownerId: this.registeredUser.id,
+      txt: this.newComment,
+      user: this.registeredUser
+    };
+
+    this.displayedData.push(comment);
+    this.newComment = '';
+  }
 }

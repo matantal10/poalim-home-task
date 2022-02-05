@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpService} from "../services/http.service";
 import {CommentIfc, UserIfc} from "../interfaces/UserIfc";
 import {forkJoin} from "rxjs";
@@ -6,7 +6,8 @@ import {forkJoin} from "rxjs";
 @Component({
   selector: 'app-users-comments-container',
   templateUrl: './users-comments-container.component.html',
-  styleUrls: ['./users-comments-container.component.scss']
+  styleUrls: ['./users-comments-container.component.scss'],
+
 })
 export class UsersCommentsContainerComponent implements OnInit, AfterViewInit, OnDestroy {
 
