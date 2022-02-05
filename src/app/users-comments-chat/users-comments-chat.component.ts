@@ -19,6 +19,11 @@ export class UsersCommentsChatComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.findMaxId();
+  }
+
+  findMaxId(): void {
+
   }
 
   editComment(comment: CommentIfc) {
@@ -36,24 +41,44 @@ export class UsersCommentsChatComponent implements OnInit {
   }
 
   selectComment(comment: CommentIfc) {
-    if(comment) {
+    if(this.selectedComment !== comment) {
       this.selectedComment = comment;
+    } else {
+      this.selectedComment = null;
     }
-
   }
 
   submit() {
+    let comment: CommentIfc;
 
-    let comment: CommentIfc = {
-      createdAt: Date().toString(),
-      parentCommentId: null,
-      id: 80,
-      ownerId: this.registeredUser.id,
-      txt: this.newComment,
-      user: this.registeredUser
-    };
+    if(this.selectedComment) {
+      comment = {
+        createdAt: Date().toString(),
+        parentCommentId: this.selectedComment.id,
+        id: this.maxId,
+        ownerId: this.registeredUser.id,
+        txt: this.newComment,
+        user: this.registeredUser
+      };
 
-    this.displayedData.push(comment);
+      this.displayedData.forEach(comment => {
+        //TODO: find the selected comment and push new comment to its comments.
+      })
+
+    } else {
+      comment = {
+        createdAt: Date().toString(),
+        parentCommentId: null,
+        id: this.maxId,
+        ownerId: this.registeredUser.id,
+        txt: this.newComment,
+        user: this.registeredUser
+      };
+
+      this.displayedData.push(comment);
+    }
+
     this.newComment = '';
+    this.maxId = this.maxId + 1;
   }
 }

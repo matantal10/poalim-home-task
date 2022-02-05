@@ -12,8 +12,8 @@
       <div *ngIf="!entity?.isEditing" class="comment">{{entity.txt}}</div>
       <div *ngIf="entity?.isEditing" class="comment"><input type="text" [(ngModel)]="entity.txt"></div>
       <div *ngIf="registeredUser.id === entity.user?.id" class="btns-container">
-        <button (click)="editComment(entity)">EDIT COMMENT</button>
-        <button (click)="deleteComment(entity)">DELETE COMMENT</button>
+        <button class="btn" (click)="editComment(entity)">EDIT COMMENT</button>
+        <button class="btn" (click)="deleteComment(entity)">DELETE COMMENT</button>
       </div>
     </div>
 
