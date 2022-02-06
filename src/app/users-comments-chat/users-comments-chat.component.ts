@@ -23,7 +23,7 @@ export class UsersCommentsChatComponent implements OnInit {
   }
 
   findMaxId(): void {
-
+    this.maxId = 80;
   }
 
   editComment(comment: CommentIfc) {
@@ -35,9 +35,44 @@ export class UsersCommentsChatComponent implements OnInit {
   }
 
   deleteComment(entity: CommentIfc) {
-    const index = this.displayedData.findIndex(comment => comment.id === entity.id);
+    let isDeleted = false;
 
-    this.displayedData.splice(index, 1);
+    //when the comment is a root comment - delete from array.
+    if(entity.parentCommentId === null) {
+      let index = this.displayedData.findIndex(comment => comment.id === entity.id);
+      this.displayedData.splice(index, 1);
+      return;
+    }
+
+    //if comment has parent id it needs to be erased from tree.
+    for (let i = 0; isDeleted == false && i < this.displayedData.length; i++) {
+      isDeleted = this.deleteFromTree(this.displayedData[i], entity.id, entity.parentCommentId);
+      console.log(isDeleted);
+    }
+
+  }
+
+
+  /**
+   * search for every comment in array - find if equals to the selected comment (by id).
+   * look for the parent in order to delete one of his child.
+   * find its index by the comment key(the selected comment id) in order to delete the selected comment
+   */
+  private deleteFromTree(comment: CommentIfc, commentKey: number, parentCommentId: number): boolean {
+
+    if (comment.id === parentCommentId && parentCommentId !== null && comment.comments.length > 0) {
+      let index = comment.comments.findIndex(entity => entity.id === commentKey);
+      comment.comments.splice(index, 1);
+      return true;
+
+    } else if (comment.comments !== null) { //has children
+      let isDeleted = false;
+      for (let i = 0; isDeleted == false && comment.comments && i < comment.comments.length; i++) {
+        isDeleted = this.deleteFromTree(comment.comments[i], commentKey, parentCommentId);
+      }
+      return isDeleted;
+    }
+    return false;
   }
 
   selectComment(comment: CommentIfc) {
@@ -61,11 +96,11 @@ export class UsersCommentsChatComponent implements OnInit {
         user: this.registeredUser
       };
 
-      this.displayedData.forEach(comment => {
-        //TODO: find the selected comment and push new comment to its comments.
-      })
+      this.selectedComment.comments = [];
+      this.selectedComment.comments.push(comment);
 
     } else {
+
       comment = {
         createdAt: Date().toString(),
         parentCommentId: null,

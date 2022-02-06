@@ -43,7 +43,9 @@
     <div class="user-image">
       <img class="rounded" src="./../../assets/images/{{registeredUser.id}}.jpg">
     </div>
-    <div class="comment new"><textarea placeholder="Please add your comment here" [(ngModel)]="newComment"></textarea></div>
+    <div class="comment new">
+      <textarea placeholder="Please add your comment here" [(ngModel)]="newComment"></textarea>
+    </div>
     <div class="btns-container">
       <button class="btn" (click)="submit()">SUBMIT</button>
     </div>
