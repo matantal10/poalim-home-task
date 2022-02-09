@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {CommentIfc, UserIfc} from "../interfaces/UserIfc";
+import {LocalStorageManager} from "../util/local-storage-manager";
 
 @Component({
   selector: 'app-users-comments-chat',
@@ -9,17 +10,25 @@ import {CommentIfc, UserIfc} from "../interfaces/UserIfc";
 })
 export class UsersCommentsChatComponent implements OnInit {
 
-  @Input() displayedData: CommentIfc[];
+  _displayedData: CommentIfc[];
   @Input() registeredUser: UserIfc;
   selectedComment: CommentIfc;
   newComment = '';
   maxId: number;
 
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private _cdr: ChangeDetectorRef, private localStorage: LocalStorageManager) { }
 
   ngOnInit(): void {
     this.findMaxId();
+  }
+
+  get displayedData(): CommentIfc[] {
+    return  this._displayedData;
+  }
+
+  @Input() set displayedData(value: CommentIfc[]) {
+    this._displayedData = value;
   }
 
   findMaxId(): void {
@@ -40,7 +49,9 @@ export class UsersCommentsChatComponent implements OnInit {
     //when the comment is a root comment - delete from array.
     if(entity.parentCommentId === null) {
       let index = this.displayedData.findIndex(comment => comment.id === entity.id);
+      let commentToRemove: CommentIfc =  this.displayedData.find(comment => comment.id === entity.id);
       this.displayedData.splice(index, 1);
+      this.localStorage.remove(`commentId${commentToRemove.id}`);
       return;
     }
 
@@ -62,7 +73,9 @@ export class UsersCommentsChatComponent implements OnInit {
 
     if (comment.id === parentCommentId && parentCommentId !== null && comment.comments.length > 0) {
       let index = comment.comments.findIndex(entity => entity.id === commentKey);
+      let commentToRemove: CommentIfc = comment.comments.find(comment => comment.id === commentKey);
       comment.comments.splice(index, 1);
+      this.localStorage.remove(`commentId${commentToRemove.id}`);
       return true;
 
     } else if (comment.comments !== null) { //has children

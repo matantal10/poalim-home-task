@@ -2,6 +2,7 @@ import {AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit} fr
 import {HttpService} from "../services/http.service";
 import {CommentIfc, UserIfc} from "../interfaces/UserIfc";
 import {forkJoin} from "rxjs";
+import {LocalStorageManager} from "../util/local-storage-manager";
 
 @Component({
   selector: 'app-users-comments-container',
@@ -17,7 +18,7 @@ export class UsersCommentsContainerComponent implements OnInit, AfterViewInit, O
    commentsList:CommentIfc[] = [];
    registeredUser: UserIfc;
 
-  constructor(private http: HttpService) {
+  constructor(private http: HttpService, private localStorage: LocalStorageManager) {
     this.commentsList.forEach( comment => {
       comment.comments = [];
     })
@@ -45,6 +46,10 @@ export class UsersCommentsContainerComponent implements OnInit, AfterViewInit, O
         });
 
         console.log(this.commentsList);
+
+        this.commentsList.forEach( comment => {
+          this.localStorage.add(`commentId${comment.id}`, comment)
+        });
 
       });
 

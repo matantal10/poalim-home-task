@@ -8,6 +8,7 @@ import { UsersCommentsContainerComponent } from './users-comments-container/user
 import { CommentTimePipe } from './pipes/comment-time.pipe';
 import { UsersCommentsChatComponent } from './users-comments-chat/users-comments-chat.component';
 import {FormsModule} from "@angular/forms";
+import {LocalStorageManager} from "./util/local-storage-manager";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import {FormsModule} from "@angular/forms";
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [LocalStorageManager],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
